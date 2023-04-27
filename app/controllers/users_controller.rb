@@ -9,14 +9,17 @@ class UsersController < ApplicationController
   end
   
   def update
-    @user = ユーザーの取得
-    @user.ユーザーのアップデート
-    redirect_to ユーザーの詳細ページへのパス  
+    @user = User.find(params[:id])
+    if @user.update(user_params)
+      redirect_to @user, notice: 'プロフィールを更新しました'
+    else
+      render :edit
+    end
   end
 
   private
 
-  def post_image_params
-    params.require(:post_image).permit(:shop_name, :image, :caption)
+  def user_params
+    params.require(:user).permit(:name, :profile_image)
   end
 end
